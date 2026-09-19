@@ -1,0 +1,64 @@
+:root {
+    --weather-transition: 1.5s;
+    --weather-scrim: 0;
+}
+
+body {
+    background: transparent !important;
+}
+
+.weather-background-gradient,
+.weather-background-gradient-next,
+#weather-background-canvas,
+.weather-background-scrim {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+.weather-background-gradient {
+    z-index: -3;
+    background: linear-gradient(135deg, #dceaf0, #a8c4d0);
+    opacity: 1;
+    transition: opacity var(--weather-transition) ease;
+}
+
+.weather-background-gradient-next {
+    z-index: -3;
+    background: linear-gradient(135deg, #dceaf0, #a8c4d0);
+    opacity: 0;
+    transition: opacity var(--weather-transition) ease;
+}
+
+#weather-background-canvas {
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    transition: opacity var(--weather-transition) ease;
+}
+
+.weather-background-scrim {
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(2, 12, 22, var(--weather-scrim)), rgba(2, 12, 22, calc(var(--weather-scrim) * .72)));
+    transition: background var(--weather-transition) ease;
+}
+
+body.weather-background-night .weather-background-gradient {
+    filter: saturate(.82) brightness(.72);
+}
+
+@media (max-width: 700px) {
+    .weather-background-scrim {
+        --weather-scrim: .08;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .weather-background-gradient,
+    .weather-background-gradient-next,
+    #weather-background-canvas,
+    .weather-background-scrim {
+        transition-duration: .01ms;
+    }
+}

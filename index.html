@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atmos | Personal Weather Desk</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="weatherBackground.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <div class="brand-mark"><i class="fa-solid fa-cloud-sun"></i></div>
+            <div>
+                <p class="eyebrow">Personal weather desk</p>
+                <h1>Know the day ahead.</h1>
+            </div>
+            <p class="header-status"><span></span>Live data enabled</p>
+        </header>
+
+        <div class="search-box">
+            <div class="search-heading">
+                <div>
+                    <p class="eyebrow">Forecast lookup</p>
+                    <h2>Where are you headed?</h2>
+                </div>
+                <i class="fa-solid fa-compass"></i>
+            </div>
+            <form id="weather-form" autocomplete="off">
+                <div class="inputs-wrapper">
+                    <div class="input-group city-group autocomplete-container">
+                        <label for="city-input">City or location</label>
+                        <div class="field-shell">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="city-input" placeholder="Search a city..." autocomplete="off">
+                        </div>
+                        <ul id="suggestions-list" class="suggestions-list hidden"></ul>
+                    </div>
+
+                    <div class="input-group date-group">
+                        <label for="date-input">Forecast date</label>
+                        <div class="field-shell">
+                        <i class="fa-solid fa-calendar-days date-icon"></i>
+                        <input type="date" id="date-input" title="Select Date (Today or 5-Day Forecast)">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="search-btn"><i class="fa-solid fa-arrow-right"></i> Search weather</button>
+
+                    <button type="button" id="location-btn" class="location-btn" title="Fetch Weather for Current Location">
+                        <i class="fa-solid fa-location-crosshairs"></i> Live Location
+                    </button>
+                </div>
+            </form>
+
+            <div class="search-options">
+                <span class="quick-title">Popular locations</span>
+                <button class="quick-btn" data-city="Mumbai">Mumbai</button>
+                <button class="quick-btn" data-city="Pondicherry">Pondicherry</button>
+                <button class="quick-btn" data-city="Delhi">Delhi</button>
+                <button class="quick-btn" data-city="Chennai">Chennai</button>
+                <button class="quick-btn" data-city="Kochi">Kochi</button>
+                <button class="quick-btn" data-city="Bhubaneswar">Bhubaneswar</button>
+            </div>
+
+            <div id="favorites-panel" class="favorites-panel hidden">
+                <div class="favorites-heading">
+                    <span class="quick-title"><i class="fa-solid fa-star"></i> Starred places</span>
+                    <span id="favorites-count" class="favorites-count">0 saved</span>
+                </div>
+                <div id="favorites-list" class="favorites-list"></div>
+            </div>
+        </div>
+
+        <section class="animation-lab" aria-labelledby="animation-lab-title">
+            <div class="animation-lab-heading">
+                <div>
+                    <p class="eyebrow">Visual preview</p>
+                    <h2 id="animation-lab-title">Explore every atmosphere</h2>
+                    <p>Preview each weather animation without making another API request.</p>
+                </div>
+                <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+            </div>
+            <div class="animation-options" role="group" aria-label="Weather animation previews">
+                <button class="animation-option" type="button" data-scene="weather-sunny" data-label="Sunny">
+                    <i class="fa-solid fa-sun"></i><span>Sunny</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-few-clouds" data-label="Few clouds">
+                    <i class="fa-solid fa-cloud-sun"></i><span>Few clouds</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-scattered-clouds" data-label="Scattered clouds">
+                    <i class="fa-solid fa-cloud"></i><span>Scattered clouds</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-cloudy" data-label="Cloudy">
+                    <i class="fa-solid fa-clouds"></i><span>Cloudy</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-drizzle" data-modifier="drizzle-light" data-label="Drizzle">
+                    <i class="fa-solid fa-cloud-rain"></i><span>Drizzle</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-rain" data-modifier="rain-light" data-label="Light rain">
+                    <i class="fa-solid fa-cloud-showers-heavy"></i><span>Light rain</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-rain" data-modifier="rain-heavy" data-label="Heavy rain">
+                    <i class="fa-solid fa-cloud-showers-water"></i><span>Heavy rain</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-storm" data-modifier="storm-heavy" data-label="Thunderstorm">
+                    <i class="fa-solid fa-cloud-bolt"></i><span>Thunderstorm</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-snow" data-modifier="snow-light" data-label="Light snow">
+                    <i class="fa-solid fa-snowflake"></i><span>Light snow</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-snow" data-modifier="snow-heavy" data-label="Heavy snow">
+                    <i class="fa-solid fa-snowman"></i><span>Heavy snow</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-mist" data-label="Mist">
+                    <i class="fa-solid fa-smog"></i><span>Mist</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-smoke" data-label="Smoke">
+                    <i class="fa-solid fa-smog"></i><span>Smoke</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-haze" data-label="Haze">
+                    <i class="fa-solid fa-cloud"></i><span>Haze</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-wind" data-label="Wind">
+                    <i class="fa-solid fa-wind"></i><span>Wind</span>
+                </button>
+                <button class="animation-option" type="button" data-scene="weather-dust" data-label="Dust">
+                    <i class="fa-solid fa-lines-leaning"></i><span>Dust</span>
+                </button>
+                <button id="restore-live-scene" class="animation-option animation-reset" type="button">
+                    <i class="fa-solid fa-rotate-left"></i><span>Use live weather</span>
+                </button>
+            </div>
+            <p id="animation-status" class="animation-status" aria-live="polite">Select a scene to preview its animation.</p>
+        </section>
+
+        <div id="welcome-card" class="welcome-card">
+            <div class="welcome-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+                <p class="eyebrow">Your local outlook</p>
+                <h3>Finding your current conditions</h3>
+                <p id="welcome-text">Detecting your location... Click <strong>"Live Location"</strong> or enter a city above to fetch weather data.</p>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loader" class="loader-container hidden">
+            <div class="spinner"></div>
+            <p id="loader-text">Fetching JSON weather data via AJAX...</p>
+        </div>
+
+        <!-- Error Container -->
+        <div id="error-card" class="error-card hidden">
+            <i class="fa-solid fa-triangle-exclamation error-icon"></i>
+            <h3 id="error-title">Notice</h3>
+            <p id="error-message">Unable to fetch location data.</p>
+        </div>
+
+        <!-- Weather Display Card -->
+        <main id="weather-card" class="weather-card hidden">
+            <!-- Notice Banner -->
+            <div id="date-notice" class="date-notice hidden">
+                <i class="fa-solid fa-circle-info"></i>
+                <span id="date-notice-text">Showing weather for selected location</span>
+            </div>
+
+            <div class="card-header">
+                <div>
+                    <h2 id="city-name">City Name</h2>
+                    <p id="current-date" class="date-text">Monday, Jan 1, 2026</p>
+                </div>
+                <div class="weather-heading-actions">
+                    <span id="weather-badge" class="badge">Condition</span>
+                    <button id="favorite-btn" class="favorite-btn" type="button" title="Add this place to starred places" aria-label="Add this place to starred places">
+                        <i class="fa-regular fa-star"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="weather-main">
+                <div class="temp-section">
+                    <img id="weather-icon" src="" alt="Weather Icon" class="weather-icon">
+                    <div class="temp-wrapper">
+                        <span id="temperature">--</span>
+                        <span class="unit">°C</span>
+                    </div>
+                </div>
+                <div class="condition-section">
+                    <h3 id="weather-description">Clear Sky</h3>
+                    <p>Feels like <span id="feels-like">--</span>°C</p>
+                </div>
+            </div>
+
+            <!-- Detailed Grid (Includes Min & Max Temp) -->
+            <div class="details-grid">
+                <div class="detail-item highlight-min">
+                    <i class="fa-solid fa-temperature-arrow-down icon-min"></i>
+                    <div>
+                        <span class="label">Min Temp</span>
+                        <span id="temp-min" class="value">-- °C</span>
+                    </div>
+                </div>
+                <div class="detail-item highlight-max">
+                    <i class="fa-solid fa-temperature-arrow-up icon-max"></i>
+                    <div>
+                        <span class="label">Max Temp</span>
+                        <span id="temp-max" class="value">-- °C</span>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-droplet"></i>
+                    <div>
+                        <span class="label">Humidity</span>
+                        <span id="humidity" class="value">--%</span>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-wind"></i>
+                    <div>
+                        <span class="label">Wind Speed</span>
+                        <span id="wind-speed" class="value">-- m/s</span>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <div>
+                        <span class="label">Pressure</span>
+                        <span id="pressure" class="value">-- hPa</span>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <i class="fa-solid fa-eye"></i>
+                    <div>
+                        <span class="label">Visibility</span>
+                        <span id="visibility" class="value">-- km</span>
+                    </div>
+                </div>
+            </div>
+
+            <section id="forecast-section" class="forecast-section hidden" aria-label="Available forecast dates">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Plan ahead</p>
+                        <h3>Available forecast</h3>
+                    </div>
+                    <span class="forecast-range">Next 5 days</span>
+                </div>
+                <div id="forecast-grid" class="forecast-grid"></div>
+            </section>
+
+            <!-- JSON Response Inspector -->
+            <div class="json-inspector">
+                <div class="json-header" id="json-toggle">
+                    <span><i class="fa-solid fa-code"></i> View Raw JSON Received via AJAX</span>
+                    <i class="fa-solid fa-chevron-down" id="json-chevron"></i>
+                </div>
+                <pre id="json-output" class="json-body hidden"><code>No data fetched yet.</code></pre>
+            </div>
+        </main>
+    </div>
+
+    <script src="weatherBackground.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
