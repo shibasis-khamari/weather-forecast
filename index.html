@@ -74,16 +74,22 @@
             </div>
         </div>
 
-        <section class="animation-lab" aria-labelledby="animation-lab-title">
+        <section class="animation-lab is-collapsed" aria-labelledby="animation-lab-title">
             <div class="animation-lab-heading">
                 <div>
                     <p class="eyebrow">Visual preview</p>
                     <h2 id="animation-lab-title">Explore every atmosphere</h2>
                     <p>Preview each weather animation without making another API request.</p>
                 </div>
-                <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+                <div class="animation-lab-actions">
+                    <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+                    <button id="animation-toggle" class="animation-toggle" type="button" aria-expanded="false" aria-controls="animation-preview-content" aria-label="Maximize visual preview" title="Maximize visual preview">
+                        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
-            <div class="animation-options" role="group" aria-label="Weather animation previews">
+            <div id="animation-preview-content" class="animation-preview-content" aria-hidden="true">
+                <div class="animation-options" role="group" aria-label="Weather animation previews">
                 <button class="animation-option" type="button" data-scene="weather-sunny" data-label="Sunny">
                     <i class="fa-solid fa-sun"></i><span>Sunny</span>
                 </button>
@@ -132,8 +138,9 @@
                 <button id="restore-live-scene" class="animation-option animation-reset" type="button">
                     <i class="fa-solid fa-rotate-left"></i><span>Use live weather</span>
                 </button>
+                </div>
+                <p id="animation-status" class="animation-status" aria-live="polite">Select a scene to preview its animation.</p>
             </div>
-            <p id="animation-status" class="animation-status" aria-live="polite">Select a scene to preview its animation.</p>
         </section>
 
         <div id="welcome-card" class="welcome-card">

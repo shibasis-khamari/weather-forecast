@@ -166,7 +166,15 @@ body.weather-default { background: linear-gradient(135deg, #e8f0ef 0%, #c9dcda 1
 .animation-lab-heading { align-items: flex-start; display: flex; justify-content: space-between; gap: 18px; }
 .animation-lab-heading h2 { font-family: 'Manrope', sans-serif; font-size: 1.35rem; letter-spacing: -.035em; margin-top: 4px; }
 .animation-lab-heading p:last-child { color: var(--muted); font-size: .8rem; margin-top: 6px; }
-.animation-lab-heading > i { color: var(--sun); font-size: 1.35rem; }
+.animation-lab-actions { align-items: center; display: flex; gap: 14px; }
+.animation-lab-actions > i { color: var(--sun); font-size: 1.35rem; }
+.animation-toggle { align-items: center; background: rgba(255,255,255,.42); border: 1px solid rgba(255,255,255,.72); border-radius: 50%; color: var(--teal); cursor: pointer; display: flex; height: 34px; justify-content: center; transition: background .2s, color .2s, transform .2s; width: 34px; }
+.animation-toggle:hover { background: rgba(255,255,255,.8); color: var(--navy); }
+.animation-toggle:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.animation-toggle i { transition: transform .2s; }
+.animation-lab:not(.is-collapsed) .animation-toggle i { transform: rotate(180deg); }
+.animation-preview-content { max-height: 500px; opacity: 1; overflow: hidden; transition: max-height .25s ease, opacity .2s ease, margin-top .25s ease; }
+.animation-lab.is-collapsed .animation-preview-content { max-height: 0; margin-top: 0; opacity: 0; pointer-events: none; }
 .animation-options { display: grid; gap: 9px; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 18px; }
 .animation-option { align-items: center; background: rgba(255,255,255,.32); border: 1px solid rgba(255,255,255,.72); border-radius: 7px; color: var(--ink); cursor: pointer; display: flex; font: inherit; gap: 9px; min-height: 44px; padding: 9px 10px; text-align: left; transition: background .2s, border-color .2s, color .2s, transform .2s; }
 .animation-option i { color: var(--teal); font-size: .9rem; width: 16px; }

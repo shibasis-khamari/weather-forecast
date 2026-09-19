@@ -44,6 +44,9 @@ const favoritesCount = document.getElementById('favorites-count');
 const favoriteBtn = document.getElementById('favorite-btn');
 const animationStatus = document.getElementById('animation-status');
 const restoreLiveSceneBtn = document.getElementById('restore-live-scene');
+const animationLab = document.querySelector('.animation-lab');
+const animationToggle = document.getElementById('animation-toggle');
+const animationPreviewContent = document.getElementById('animation-preview-content');
 const weatherBackground = new WeatherBackgroundManager({
     onThunder: () => document.body.classList.add('thunder-pulse')
 }).init();
@@ -205,6 +208,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     favoriteBtn.addEventListener('click', toggleCurrentFavorite);
+
+    animationToggle.addEventListener('click', () => {
+        const isCollapsed = animationLab.classList.toggle('is-collapsed');
+        animationToggle.setAttribute('aria-expanded', String(!isCollapsed));
+        animationPreviewContent.setAttribute('aria-hidden', String(isCollapsed));
+        const label = isCollapsed ? 'Maximize visual preview' : 'Minimize visual preview';
+        animationToggle.setAttribute('aria-label', label);
+        animationToggle.setAttribute('title', label);
+    });
 
     document.querySelectorAll('.animation-option[data-scene]').forEach((button) => {
         button.addEventListener('click', () => {
