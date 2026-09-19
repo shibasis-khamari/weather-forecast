@@ -153,9 +153,11 @@
         </div>
 
         <!-- Loading Indicator -->
-        <div id="loader" class="loader-container hidden">
-            <div class="spinner"></div>
-            <p id="loader-text">Fetching JSON weather data via AJAX...</p>
+        <div id="loader" class="loader-container hidden" role="status" aria-live="polite">
+            <div class="loader-content">
+                <div class="spinner" aria-hidden="true"></div>
+                <p id="loader-text">Fetching JSON weather data via AJAX...</p>
+            </div>
         </div>
 
         <!-- Error Container -->

@@ -22,6 +22,7 @@ const FAVORITES_STORAGE_KEY = 'atmos-starred-places';
 
 // DOM Elements
 const weatherForm = document.getElementById('weather-form');
+const searchBtn = document.getElementById('search-btn');
 const cityInput = document.getElementById('city-input');
 const suggestionsList = document.getElementById('suggestions-list');
 const dateInput = document.getElementById('date-input');
@@ -689,6 +690,10 @@ function handleApiError(status, message, city) {
 // UI State Functions
 function showLoading(text) {
     loaderText.textContent = text || 'Fetching JSON weather data via AJAX...';
+    searchBtn.disabled = true;
+    locationBtn.disabled = true;
+    searchBtn.setAttribute('aria-busy', 'true');
+    locationBtn.setAttribute('aria-busy', 'true');
     welcomeCard.classList.add('hidden');
     loader.classList.remove('hidden');
     errorCard.classList.add('hidden');
@@ -697,6 +702,7 @@ function showLoading(text) {
 }
 
 function showWeatherCard() {
+    setLoadingButtons(false);
     welcomeCard.classList.add('hidden');
     loader.classList.add('hidden');
     errorCard.classList.add('hidden');
@@ -704,6 +710,7 @@ function showWeatherCard() {
 }
 
 function showError(title, message) {
+    setLoadingButtons(false);
     welcomeCard.classList.add('hidden');
     loader.classList.add('hidden');
     weatherCard.classList.add('hidden');
@@ -714,6 +721,7 @@ function showError(title, message) {
 }
 
 function showWelcomeState(title, message) {
+    setLoadingButtons(false);
     loader.classList.add('hidden');
     weatherCard.classList.add('hidden');
     errorCard.classList.add('hidden');
@@ -723,4 +731,11 @@ function showWelcomeState(title, message) {
         welcomeText.textContent = message;
     }
     welcomeCard.classList.remove('hidden');
+}
+
+function setLoadingButtons(isLoading) {
+    searchBtn.disabled = isLoading;
+    locationBtn.disabled = isLoading;
+    searchBtn.setAttribute('aria-busy', String(isLoading));
+    locationBtn.setAttribute('aria-busy', String(isLoading));
 }
